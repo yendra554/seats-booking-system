@@ -1,0 +1,106 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Home</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>BOOK YOUR SEATS:</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="mt-5" style="color: rgb(194, 23, 23); font: 3em sans-serif">
+        Enter Number of Passengers:
+      </h1>
+      <div class="row">
+        <div class="col-sm-12">
+          <form [formGroup]="bookingsForm" (ngSubmit)="book()">
+            <div class="row" style="margin-top: 20px">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input
+                    type="number"
+                    min="1"
+                    max="7"
+                    formControlName="seatsToBook"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <button
+                  type="submit"
+
+                  class="btn btn-primary"
+                >
+                  Book
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-12">
+          <p class="text-primary msg">{{ message }}</p>
+        </div>
+        <div class="col-sm-12">
+          <h3 style="color: rgb(194, 23, 23)"></h3>
+          <p class="text-primary" *ngFor="let b of bookings">
+            <!-- {{b.time|date:'mediumTime'}}: {{b.seats}} -->
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1">&nbsp;</div>
+    <div class="col-sm-7">
+      <h1 class="my-3" style="color: rgb(194, 23, 23); font: 3em sans-serif">
+        <b>Seat Chart Layout</b>
+      </h1>
+      <ng-container *ngIf="data$ | async as d">
+        <p style="color: rgb(194, 23, 23); font: 2em sans-serif" class="my-3">
+          <b>Total Seats : </b> {{ d.total }} <br />
+          <b>Booked Seats : </b> {{ d.booked }} <br /><b>Left Seats : </b
+          >{{ d.rem }}
+        </p>
+        <div class="gap-2 col-6 mx-auto">
+          <button type="button" class="btn btn-outline-primary btn-lg">
+            <b>Coach: S1</b>
+          </button>
+        </div>
+        <ng-container *ngFor="let r of d.seatChart">
+          <div class="coach_row">
+            <div class="circle rowx">R{{ r.row }}</div>
+            <ng-container *ngIf="r.row !== 12">
+              <ng-container *ngFor="let n of sevenSeater">
+                <div
+                  class="circle seat"
+                  [ngClass]="
+                    checkBook(n, r.row, r.booked_seats) ? 'booked' : ''
+                  "
+                >
+                  {{ n + r.start - 1 }}
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="r.row === 12">
+              <ng-container *ngFor="let n of threeSeater">
+                <div
+                  class="circle seat"
+                  [ngClass]="
+                    checkBook(n, r.row, r.booked_seats) ? 'booked' : ''
+                  "
+                >
+                  {{ n + r.start - 1 }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
