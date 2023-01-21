@@ -23,7 +23,7 @@ export class HomeService {
 
   private dataStore: DATASTORE = {
     seatChart: [
-      { row: 1, booked: 0, max: 7, start: 1, booked_seats: [1,2,4,5] },
+      { row: 1, booked: 0, max: 7, start: 1, booked_seats: [2,3,4,5,6,7] },
       { row: 2, booked: 0, max: 7, start: 8, booked_seats: [] },
       { row: 3, booked: 0, max: 7, start: 15, booked_seats: [] },
       { row: 4, booked: 0, max: 7, start: 22, booked_seats: [] },
@@ -37,8 +37,8 @@ export class HomeService {
       { row: 12, booked: 0, max: 3, start: 78, booked_seats: [] },
     ],
     total: 80,
-    booked: 4,
-    rem: 75,
+    booked: 6,
+    rem: 74,
   };
   private _data = new BehaviorSubject<DATASTORE>(this.dataStore);
 
